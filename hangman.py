@@ -2,7 +2,13 @@ import random
 import string
 from words import words
 from livesVisual import lives_visual_dict
+import os
 
+#clears console between guesses
+def clear_console():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+#gets random word
 def getValidWord(words):
     word = random.choice(words) #randomly chooses something from words
     while '-' in word or ' ' in word:
@@ -19,6 +25,7 @@ def hangman():
     
     #getting user input
     while len(wordLetters) > 0 and lives > 0:
+        clear_console() #clears previous guess
         #display letters used
         if lives != 1:
             print('You have', lives, 'lives and have used these letters: ', ' '.join(usedLetters))
@@ -38,8 +45,10 @@ def hangman():
                 print()
                 
             else: 
+                
                 lives = lives - 1
                 print('\nYour letter,', userLetter, 'is not in the word.')
+                
                 
                 
         elif userLetter in usedLetters:
@@ -51,6 +60,7 @@ def hangman():
             print() 
     
     if lives == 0:
+        clear_console()
         print(lives_visual_dict[lives])
         print('You lose. The word was', word)
         print()
